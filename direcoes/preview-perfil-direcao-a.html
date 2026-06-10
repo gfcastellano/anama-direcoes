@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfil IG — Direção A · Caderno de Campo · Meliponário Ânãmã</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Inter:wght@400;600;700&family=Caveat:wght@600&display=swap');
+
+:root { --azul:#3A4FB5; --ambar:#D98E2B; --preto:#1A1A1A; --papel:#F7F4EE; --verde:#2E5339; }
+* { margin:0; box-sizing:border-box; }
+body { background:#2a2a2a; font-family:Inter,sans-serif; color:#111;
+  display:grid; place-items:center; min-height:100vh; padding:2rem 0 4rem; }
+
+.rotulo { position:fixed; top:12px; left:12px; background:var(--ambar); color:var(--preto);
+  font-size:.7rem; font-weight:700; padding:.4em 1em; border-radius:999px; z-index:60; }
+
+.phone { width:393px; background:#fff; border-radius:24px; overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.5); }
+.topbar { display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px 10px; font-weight:700; font-size:1.05rem; }
+.topbar .icons { font-size:1.1rem; letter-spacing:.5em; color:#333; }
+.profile { display:flex; align-items:center; gap:22px; padding:4px 16px 12px; }
+.avatar { width:88px; height:88px; border-radius:50%; overflow:hidden;
+  border:3px solid var(--ambar); flex-shrink:0; background:var(--papel); }
+.avatar img { width:100%; height:100%; object-fit:cover; object-position:72% 38%; transform:scale(1.6); }
+.stats { display:flex; gap:26px; flex:1; justify-content:center; text-align:center; }
+.stats b { display:block; font-size:1.05rem; }
+.stats span { font-size:.8rem; color:#555; }
+.bio { padding:0 16px 12px; font-size:.86rem; line-height:1.45; }
+.bio .nome { font-weight:700; }
+.bio .cat { color:#777; font-size:.8rem; }
+.acoes { display:flex; gap:8px; padding:0 16px 16px; }
+.acoes button { flex:1; border:0; border-radius:8px; padding:8px 0;
+  font-weight:600; font-size:.85rem; font-family:Inter,sans-serif; }
+.btn-msg { background:var(--azul); color:#fff; }
+.btn-seguir { background:#efefef; }
+.highlights { display:flex; gap:18px; padding:4px 16px 18px; }
+.hl { text-align:center; font-size:.72rem; color:#333; }
+.hl .circle { width:60px; height:60px; border-radius:50%; border:2px solid #ccc;
+  display:grid; place-items:center; font-size:1.5rem; margin:0 auto 4px; background:var(--papel); }
+.tabs-ig { display:flex; border-top:1px solid #ddd; }
+.tabs-ig div { flex:1; text-align:center; padding:10px 0; font-size:1.1rem; }
+.tabs-ig .on { border-top:2px solid #111; margin-top:-1px; }
+
+/* grid 3x3 — cada célula mostra o canvas 1080x1350 cropado quadrado */
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:#fff; }
+.cell { position:relative; aspect-ratio:1; overflow:hidden; cursor:zoom-in; background:var(--papel); }
+.cell .ic { position:absolute; top:6px; right:6px; color:#fff; font-size:.85rem;
+  text-shadow:0 1px 3px rgba(0,0,0,.65); z-index:2; }
+.cw { transform:scale(0.120062); transform-origin:0 0; margin-top:-16.2px; }
+
+.nota-app { color:#888; font-size:.78rem; text-align:center; padding:14px; background:#fafafa;
+  border-top:1px solid #eee; }
+
+/* lightbox com navegação */
+#lb { position:fixed; inset:0; background:rgba(10,10,10,.94); display:none; z-index:100; }
+#lb.on { display:block; }
+#lb .stage { position:fixed; left:50%; top:50%; transform-origin:center center; }
+#lb .nav { position:fixed; top:50%; transform:translateY(-50%); font-size:2.6rem;
+  color:#ddd; background:rgba(40,40,40,.7); border:0; width:56px; height:56px;
+  border-radius:50%; cursor:pointer; line-height:0; }
+#lb .nav:hover { background:var(--ambar); color:var(--preto); }
+#lb .prev { left:18px; } #lb .next { right:18px; }
+#lb .rodape-lb { position:fixed; bottom:16px; left:0; right:0; text-align:center;
+  color:#bbb; font-size:.9rem; }
+#lb .fechar { position:fixed; top:14px; right:20px; font-size:2rem; color:#ddd;
+  background:none; border:0; cursor:pointer; }
+
+/* ===== estilo dos posts — Direção A (canvas 1080x1350) ===== */
+.post { width:1080px; height:1350px; position:relative; overflow:hidden;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 62px, rgba(26,26,26,.04) 62px 64px),
+    var(--papel);
+  color:var(--preto); font-family:Inter,sans-serif; }
+.greca { height:40px; width:100%; background:url('../grafismo-borda.svg') repeat-x;
+  background-size:auto 100%; position:absolute; left:0; }
+.greca.t { top:0; } .greca.b { bottom:0; }
+.pad { padding:150px 90px 120px; height:100%; display:flex; flex-direction:column; }
+.kicker { font-family:Caveat,cursive; color:var(--azul); font-size:46px; }
+.post h1 { font-family:Fraunces,serif; font-weight:900; font-size:88px; line-height:1.06; margin-top:18px; }
+.post h1 em { font-style:italic; color:var(--ambar); }
+.polaroid { background:#fff; padding:18px 18px 64px; box-shadow:0 14px 36px rgba(26,26,26,.22);
+  display:inline-block; position:relative; align-self:center; transform:rotate(-2.5deg); margin-top:auto; }
+.polaroid.gira { transform:rotate(2deg); }
+.polaroid img { display:block; width:600px; height:460px; object-fit:cover; }
+.polaroid.alta img { width:560px; height:560px; }
+.polaroid .leg { font-family:Caveat,cursive; font-size:40px; position:absolute;
+  bottom:8px; left:0; right:0; text-align:center; }
+.fita { position:absolute; top:-20px; left:50%; transform:translateX(-50%) rotate(-3deg);
+  width:200px; height:48px; background:rgba(217,142,43,.45); }
+.rodape { display:flex; justify-content:space-between; align-items:center; margin-top:auto;
+  font-size:30px; font-weight:600; color:var(--verde); }
+.carimbo { width:200px; height:200px; border:5px double var(--ambar); border-radius:50%;
+  color:var(--ambar); font-family:Fraunces,serif; font-weight:600; font-size:23px;
+  text-transform:uppercase; letter-spacing:.14em; display:grid; place-items:center;
+  text-align:center; transform:rotate(10deg); padding:26px; position:absolute;
+  right:70px; top:130px; z-index:1; }
+.nota-mao { font-family:Caveat,cursive; font-size:48px; color:var(--azul);
+  transform:rotate(-1.5deg); margin-top:34px; }
+.arrasta { font-size:34px; color:var(--verde); margin-top:36px; }
+.play { width:150px; height:150px; border:6px solid var(--preto); border-radius:50%;
+  display:grid; place-items:center; font-size:60px; color:var(--preto);
+  background:rgba(247,244,238,.75); position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); z-index:3; }
+.fichas-mini { display:flex; gap:40px; margin-top:60px; }
+.ficha-mini { flex:1; background:#fff; border:3px solid var(--preto); padding:44px;
+  box-shadow:8px 8px 0 var(--preto); }
+.ficha-mini h3 { font-family:Fraunces,serif; font-weight:900; font-size:54px; color:var(--ambar); }
+.ficha-mini p { font-size:32px; margin-top:18px; line-height:1.5; }
+</style>
+</head>
+<body>
+<span class="rotulo">DIREÇÃO A — Caderno de Campo</span>
+
+<div class="phone">
+  <div class="topbar"><span>meliponario.anama</span><span class="icons">＋ ☰</span></div>
+  <div class="profile">
+    <div class="avatar"><img src="../desenho-original.png" alt="avatar"></div>
+    <div class="stats">
+      <div><b>9</b><span>posts</span></div>
+      <div><b>—</b><span>seguidores</span></div>
+      <div><b>—</b><span>seguindo</span></div>
+    </div>
+  </div>
+  <div class="bio">
+    <p class="nome">Meliponário Ânãmã · Mel de Abelhas Nativas</p>
+    <p class="cat">Fazenda</p>
+    <p>Mel de abelhas nativas sem ferrão 🐝<br>
+    Jataí e Mandaçaia · Mata Atlântica<br>
+    Criação que respeita a abelha e a floresta<br>
+    📩 Peça seu mel pela DM</p>
+  </div>
+  <div class="acoes"><button class="btn-msg">Enviar mensagem</button><button class="btn-seguir">Seguir</button></div>
+  <div class="highlights">
+    <div class="hl"><div class="circle">🍯</div>O Mel</div>
+    <div class="hl"><div class="circle">🐝</div>As Abelhas</div>
+    <div class="hl"><div class="circle">🌳</div>A Mata</div>
+    <div class="hl"><div class="circle">🧑‍🌾</div>Colheita</div>
+  </div>
+  <div class="tabs-ig"><div class="on">▦</div><div>▶</div><div>👤</div></div>
+
+  <div class="grid">
+
+    <!-- 1 apresentação (carrossel) -->
+    <div class="cell" data-cap="1 · Apresentação (carrossel)"><span class="ic">⧉</span><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="carimbo">colhido com respeito · mata atlântica ·</div>
+        <div class="pad">
+          <p class="kicker">prazer! Telêmaco Borba, PR</p>
+          <h1>Esse é o<br>Meliponário <em>Ânãmã</em></h1>
+          <p class="nota-mao">mel de abelhas nativas sem ferrão 🐝</p>
+          <p class="arrasta">arrasta pro lado →</p>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 2 desenho original -->
+    <div class="cell" data-cap="2 · O desenho original"><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">antes do Instagram, o papel</p>
+          <div class="polaroid alta"><div class="fita"></div>
+            <img src="../desenho-original.png" alt="">
+            <span class="leg">a marca nasceu à mão</span>
+          </div>
+          <div class="rodape"><span>@meliponario.anama</span><span>desenho do Andrei ✍️</span></div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 3 saber (carrossel) -->
+    <div class="cell" data-cap="3 · Saber (carrossel)"><span class="ic">⧉</span><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">caderno de campo · o saber</p>
+          <h1>Conhece o mel de abelha <em>sem ferrão</em>?</h1>
+          <p class="arrasta">arrasta pro lado →</p>
+          <div class="polaroid"><div class="fita"></div>
+            <img src="../fotos/abelha-verde-flor-laranja.jpeg" alt="">
+            <span class="leg">olha ela trabalhando!</span>
+          </div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 4 floresta -->
+    <div class="cell" data-cap="4 · A mata onde as caixas vivem"><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">diário da mata · a floresta</p>
+          <div class="polaroid"><div class="fita"></div>
+            <img src="../fotos/meliponario-estrutura.jpeg" alt="">
+            <span class="leg">onde as caixas vivem</span>
+          </div>
+          <p class="nota-mao">"a mata assina cada pote"</p>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 5 reel: abrindo a caixa -->
+    <div class="cell" data-cap="5 · Reel: abrindo uma caixa de jataí"><span class="ic">▶</span><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="play">▶</div>
+        <div class="pad">
+          <p class="kicker">o guia · vem ver</p>
+          <h1 style="font-size:78px;">Abrindo uma caixa de <em>jataí</em></h1>
+          <div class="polaroid gira"><div class="fita"></div>
+            <img src="../fotos/caixas-fileira.jpeg" alt="">
+            <span class="leg">pode chegar perto, não tem ferrão</span>
+          </div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 6 mel -->
+    <div class="cell" data-cap="6 · O mel (CTA DM)"><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">do pote pra mesa</p>
+          <h1 style="font-size:78px;">Feito em <em>litros</em>,<br>não em toneladas</h1>
+          <div class="polaroid gira"><div class="fita"></div>
+            <img src="../fotos/potes-mel.jpeg" alt="">
+            <span class="leg">colheita da estação</span>
+          </div>
+          <div class="rodape"><span>@meliponario.anama</span><span>pede pela DM 📩</span></div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 7 saber (carrossel) -->
+    <div class="cell" data-cap="7 · Jataí × Mandaçaia (carrossel)"><span class="ic">⧉</span><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">caderno de campo · o saber</p>
+          <h1 style="font-size:80px;">Jataí <em>×</em> Mandaçaia: qual a diferença?</h1>
+          <div class="fichas-mini">
+            <div class="ficha-mini"><h3>Jataí</h3><p>cítrico, leve, quase um suco de flor</p></div>
+            <div class="ficha-mini"><h3>Mandaçaia</h3><p>encorpado, final levemente ácido</p></div>
+          </div>
+          <p class="arrasta" style="margin-top:auto;">arrasta pro lado →</p>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 8 reel: não tiramos todo o mel -->
+    <div class="cell" data-cap="8 · Reel: por que não tiramos todo o mel"><span class="ic">▶</span><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="play">▶</div>
+        <div class="pad">
+          <p class="kicker">o guia · vem ver</p>
+          <h1 style="font-size:74px;">Por que a gente <em>não tira</em> todo o mel</h1>
+          <div class="polaroid"><div class="fita"></div>
+            <img src="../fotos/flor-azul-abelha.jpeg" alt="">
+            <span class="leg">o mel é o alimento da colônia</span>
+          </div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+    <!-- 9 floresta: papagaio -->
+    <div class="cell" data-cap="9 · A Mata Atlântica também é isso"><div class="cw">
+      <div class="post">
+        <div class="greca t"></div>
+        <div class="pad">
+          <p class="kicker">diário da mata · a floresta</p>
+          <h1 style="font-size:74px;">A Mata Atlântica também é <em>isso</em></h1>
+          <div class="polaroid gira"><div class="fita"></div>
+            <img src="../fotos/papagaio-mata.jpeg" alt="" style="width:400px; height:auto; object-fit:contain;">
+            <span class="leg">vizinho do meliponário</span>
+          </div>
+        </div>
+        <div class="greca b"></div>
+      </div>
+    </div></div>
+
+  </div>
+  <div class="nota-app">Preview · Direção A — clica num post pra ampliar · ← → navegam</div>
+</div>
+
+<!-- lightbox -->
+<div id="lb">
+  <button class="fechar" id="lb-x">×</button>
+  <button class="nav prev" id="lb-prev">‹</button>
+  <div class="stage" id="lb-stage"></div>
+  <button class="nav next" id="lb-next">›</button>
+  <p class="rodape-lb" id="lb-cap"></p>
+</div>
+
+<script>
+const cells = [...document.querySelectorAll('.cell')];
+const lb = document.getElementById('lb');
+const stage = document.getElementById('lb-stage');
+const cap = document.getElementById('lb-cap');
+let idx = 0;
+
+function abrir(i) {
+  idx = (i + cells.length) % cells.length;
+  const canvas = cells[idx].querySelector('.post').cloneNode(true);
+  stage.innerHTML = '';
+  stage.appendChild(canvas);
+  const s = Math.min((window.innerHeight * 0.88) / 1350, (window.innerWidth * 0.8) / 1080);
+  stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  stage.style.width = '1080px';
+  stage.style.height = '1350px';
+  cap.textContent = (idx + 1) + ' / 9 — ' + cells[idx].dataset.cap;
+  lb.classList.add('on');
+}
+cells.forEach((c, i) => c.addEventListener('click', () => abrir(i)));
+document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); abrir(idx - 1); });
+document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); abrir(idx + 1); });
+document.getElementById('lb-x').addEventListener('click', () => lb.classList.remove('on'));
+lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('on'); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('on')) return;
+  if (e.key === 'Escape') lb.classList.remove('on');
+  if (e.key === 'ArrowLeft') abrir(idx - 1);
+  if (e.key === 'ArrowRight') abrir(idx + 1);
+});
+// swipe no celular
+let tx = null;
+lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) abrir(idx + (dx < 0 ? 1 : -1));
+  tx = null;
+}, { passive: true });
+</script>
+</body>
+</html>
