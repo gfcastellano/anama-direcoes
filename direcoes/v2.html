@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viewer v2 — site sem pauta · Meliponário Ânãmã</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+* { margin:0; box-sizing:border-box; }
+body { font-family:Inter,sans-serif; background:#1A1A1A; color:#F7F4EE;
+  padding:3rem 1.5rem 5rem; }
+h1 { font-size:1.6rem; text-align:center; }
+.sub { text-align:center; color:#999; margin:.5rem 0 2.5rem; font-size:.95rem; }
+.decisao { text-align:center; max-width:42rem; margin:0 auto 2.5rem; padding:1rem 1.4rem;
+  border:1px solid #D98E2B; border-radius:12px; color:#E8B05E; font-size:.9rem; }
+.dirs { display:grid; gap:1.5rem; max-width:52rem; margin:0 auto; }
+a.dir { display:block; border:2px solid #444; border-radius:14px; overflow:hidden;
+  text-decoration:none; color:inherit; transition:border-color .2s; }
+a.dir:hover { border-color:#D98E2B; }
+.dir iframe { width:200%; height:560px; border:0; transform:scale(.5);
+  transform-origin:0 0; pointer-events:none; display:block; }
+.dir .frame-clip { height:280px; overflow:hidden; }
+.dir .info { padding:1.2rem 1.4rem; background:#222; }
+.dir h3 { font-size:1.05rem; }
+.dir p { font-size:.85rem; color:#aaa; margin-top:.3rem; }
+@media (min-width:760px){ .dirs { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Meliponário Ânãmã — site · viewer v2</h1>
+<p class="decisao">Feedback do Andrei (10/06): linhas de caderno no fundo, não;
+o resto, sim. <strong>v2 = mesmo design, papel liso.</strong></p>
+
+<div class="dirs">
+  <a class="dir" href="direcao-a-v2.html">
+    <div class="frame-clip"><iframe src="direcao-a-v2.html" tabindex="-1" loading="lazy"></iframe></div>
+    <div class="info"><h3>✓ v2 — papel liso (novo)</h3>
+    <p>Sem as linhas de caderno. Polaroids, anotações à mão, carimbo e greca mantidos.</p></div>
+  </a>
+  <a class="dir" href="direcao-a-caderno-de-campo.html">
+    <div class="frame-clip"><iframe src="direcao-a-caderno-de-campo.html" tabindex="-1" loading="lazy"></iframe></div>
+    <div class="info"><h3>v1 — com pauta (referência)</h3>
+    <p>Versão anterior, com as linhas de caderno no fundo. Mantida só pra comparação.</p></div>
+  </a>
+</div>
+
+</body>
+</html>
